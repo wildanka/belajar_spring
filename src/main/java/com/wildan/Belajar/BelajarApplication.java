@@ -1,5 +1,6 @@
 package com.wildan.Belajar;
 
+import com.wildan.Belajar.model.ButuhBean;
 import com.wildan.Belajar.model.DataBean;
 import com.wildan.Belajar.model.DependenBean;
 import org.springframework.boot.SpringApplication;
@@ -16,7 +17,14 @@ public class BelajarApplication {
 //		DataBean dataNama = context.getBean(DataBean.class);
 //		System.out.println(dataNama.getNama());
 
-		DependenBean data = context.getBean(DependenBean.class);
-		System.out.println(data.getDatabean().getNama()); //karena yang kita ambil adalah variabel "nama" pada class "DataBean"
+//		DependenBean data = context.getBean(DependenBean.class);
+//		System.out.println(data.getDatabean().getNama()); //karena yang kita ambil adalah variabel "nama" pada class "DataBean"
+
+		ButuhBean data = context.getBean(ButuhBean.class);
+
+		//sout Wildan Kurniadi (1)
+		System.out.println(data.getDataBean().getNama());
+		//sout Kurniadi (2)
+		System.out.println(data.getDependenBean().getDatabean().getNama());
 	}
 }
