@@ -1,12 +1,11 @@
 package com.wildan.Belajar;
 
-import com.wildan.Belajar.model.ButuhBean;
+import com.wildan.Belajar.model.OtherBean;
 import com.wildan.Belajar.model.DataBean;
-import com.wildan.Belajar.model.DependenBean;
+import com.wildan.Belajar.model.SampleBean;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Primary;
 
 /**
  * Created by DAN on 3/15/2018.
@@ -14,14 +13,14 @@ import org.springframework.context.annotation.Primary;
 @SpringBootApplication
 public class BelajarConfiguration {
 
-    @Bean(name = "1")
+    @Bean(name = "namaDepan")
     //@Primary
     public DataBean createDataBean(){
-        DataBean bean = new DataBean("Wildan Kurniadi");
+        DataBean bean = new DataBean("Wildan");
         return bean;
     }
 
-    @Bean(name = "2")
+    @Bean(name = "namaBelakang")
     public DataBean createDataBean2(){
         DataBean bean = new DataBean("Kurniadi");
         return bean;
@@ -34,16 +33,16 @@ public class BelajarConfiguration {
 
     // jika kita ingin mengambil atribut yang ada pada bean lain (di kasus ini DataBean) alias dependensi
     // maka tidak perlu membuat instance manual ataupun memanggil method beannya,
-    // cukup dengan menjadikan object ari bean tersebut sebagai parameter
+    // cukup dengan menjadikan object dari bean tersebut sebagai parameter
     @Bean
-    public DependenBean createDependenBean(@Qualifier("1") DataBean dataBean){
-        DependenBean bean = new DependenBean(dataBean);
+    public SampleBean createSampleBean(@Qualifier("namaDepan") DataBean dataBean){
+        SampleBean bean = new SampleBean(dataBean);
         return bean;
     }
 
     @Bean
-    public ButuhBean ButuhBean(@Qualifier("2") DataBean dataBean, DependenBean dependenBean){
-        ButuhBean bean = new ButuhBean(dataBean,dependenBean);
+    public OtherBean createOtherBean(@Qualifier("namaBelakang") DataBean dataBean, SampleBean sampleBean){
+        OtherBean bean = new OtherBean(dataBean, sampleBean);
         return bean;
     }
 

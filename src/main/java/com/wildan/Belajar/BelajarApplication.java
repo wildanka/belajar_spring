@@ -1,30 +1,37 @@
 package com.wildan.Belajar;
 
-import com.wildan.Belajar.model.ButuhBean;
-import com.wildan.Belajar.model.DataBean;
-import com.wildan.Belajar.model.DependenBean;
+import com.wildan.Belajar.model.OtherBean;
+import com.wildan.Belajar.model.SayHello;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
 
 public class BelajarApplication {
 
-	public static void main(String[] args) {
-		//saat aplkasi di running, maka semua konfigurasi dari class BelajarConfiguration akan digunakan
-		ApplicationContext context =  SpringApplication.run(BelajarConfiguration.class, args); //config berisi bean
+    public static void main(String[] args) {
+        //saat aplkasi di running, maka semua konfigurasi dari class BelajarConfiguration akan digunakan,
+        // ini adalah container
+        ApplicationContext context = SpringApplication.run(BelajarConfiguration.class, args); //config berisi bean
 
 //		DataBean dataNama = context.getBean(DataBean.class);
 //		System.out.println(dataNama.getNama());
 
-//		DependenBean data = context.getBean(DependenBean.class);
+//		SampleBean data = context.getBean(SampleBean.class);
 //		System.out.println(data.getDatabean().getNama()); //karena yang kita ambil adalah variabel "nama" pada class "DataBean"
 
-		ButuhBean data = context.getBean(ButuhBean.class);
+        OtherBean data = context.getBean(OtherBean.class);
 
-		//sout Wildan Kurniadi (1)
-		System.out.println(data.getDataBean().getNama());
-		//sout Kurniadi (2)
-		System.out.println(data.getDependenBean().getDatabean().getNama());
-	}
+        //sout Wildan Kurniadi (first_name)
+        // DataBean (Kurniadi) -> OtherBean
+        //System.out.println(data.getDataBean().getNama());
+
+        //sout Kurniadi (last_name)
+        // DataBean (Wildan) -> SampleBean -> OtherBean
+        //System.out.println(data.getSampleBean().getDatabean().getNama());
+
+        SayHello hello = context.getBean(SayHello.class);
+        String response = hello.sayHello("Wildan Kurniadi");
+
+        System.out.println(response);
+    }
 }
