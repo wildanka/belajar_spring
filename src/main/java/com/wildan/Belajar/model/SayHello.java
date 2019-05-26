@@ -1,6 +1,7 @@
 package com.wildan.Belajar.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Component;
  * kita dapat menggunakan @Component untuk memudahkan kita ketimbang mengetik method yang panjang di Configuration
  */
 @Component
+@Scope("prototype")
 public class SayHello {
     private SayHelloFilter filter;
 
