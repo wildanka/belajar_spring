@@ -6,6 +6,10 @@ import com.wildan.Belajar.model.SampleBean;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
+
+import java.util.Random;
+import java.util.UUID;
 
 /**
  * Created by DAN on 3/15/2018.
@@ -13,10 +17,19 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class BelajarConfiguration {
 
+    /**
+     * untuk membuat objek baru setiap kali kita memanggil getBean, gunakan @Scope("prototype")
+     * sebenarnya ada juga scope yang lain, yaitu session, request namun itu hanya terjadi di dalam wired (untuk di web)
+     * jika scopenya request maka bean akan dibuat setiap request yang berbeda,
+     * begitupun dengan session, akan di create setiap session yang berbeda.
+     * namun untuk aplikasi console dan desktop hanya ada 2 Scope (singleton/prototype)
+     * @return
+     */
     @Bean(name = "namaDepan")
-    //@Primary
+    @Scope("singleton")
     public DataBean createDataBean(){
-        DataBean bean = new DataBean("Wildan");
+        String random = UUID.randomUUID().toString();
+        DataBean bean = new DataBean(random);
         return bean;
     }
 
