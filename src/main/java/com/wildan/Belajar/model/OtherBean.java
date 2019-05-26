@@ -45,6 +45,12 @@ public class OtherBean implements ApplicationContextAware{
     public void doSomething(){
         if (applicationContext!=null){
             System.out.println("Correct, Context Ada");
+
+            //kita bisa memanggil bean lain lagi dari sini
+            DataBean dataBean = applicationContext.getBean("namaDepan",DataBean.class);
+            dataBean.setNama("Kiwil");
+            System.out.println(dataBean.getNama());
+
         }else{
             System.out.println("Error, Context Tidak Ada");
         }
