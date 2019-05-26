@@ -26,7 +26,7 @@ public class BelajarConfiguration {
      * @return
      */
     @Bean(name = "namaDepan")
-    @Scope("singleton")
+    @Scope("prototype")
     public DataBean createDataBean(){
         String random = UUID.randomUUID().toString();
         DataBean bean = new DataBean(random);
