@@ -23,18 +23,33 @@ public class BelajarConfiguration {
      * jika scopenya request maka bean akan dibuat setiap request yang berbeda,
      * begitupun dengan session, akan di create setiap session yang berbeda.
      * namun untuk aplikasi console dan desktop hanya ada 2 Scope (singleton/prototype)
+     *
      * @return
      */
     @Bean(name = "namaDepan")
     @Scope("prototype")
-    public DataBean createDataBean(){
+    public DataBean createDataBean() {
         String random = UUID.randomUUID().toString();
         DataBean bean = new DataBean(random);
         return bean;
     }
 
+    /**
+     * jika kita perhatikan lagi saat menjalankan program, semua method dengan @PostConstruct terlihat dipanggil semua
+     * namun method @PreDestroy hanya dipanggil yang @Scope-nya singleton saja, mengapa?
+     * hal ini dikarenakan Spring hanya bertanggung jawab sampai objek itu selesai dibuat,
+     * jadi ketika diberikan ke yang memanggilnya, maka tanggung jawab diberikan kepada si pemanggil tersebut.
+     * maka oleh karena itu dalam @Scope prototype Spring tidak akan memanggil @PreDestroy method yang ada di dalam prototype.
+     * jadi @PreDestroy:
+     * Singleton = Bean masih ada di dalam container Spring
+     * Prototype = Bean akan diberikan kepada Bean baru yang memanggil, dan Spring akan lepas tanggung jawab dari Bean Prototype tersebut
+     *
+     * untuk @PostConstruct:
+     * keduanya bisa memanggil @PostConstruct
+     * @return
+     */
     @Bean(name = "namaBelakang")
-    public DataBean createDataBean2(){
+    public DataBean createDataBean2() {
         DataBean bean = new DataBean("Kurniadi");
         return bean;
     }
@@ -48,13 +63,13 @@ public class BelajarConfiguration {
     // maka tidak perlu membuat instance manual ataupun memanggil method beannya,
     // cukup dengan menjadikan object dari bean tersebut sebagai parameter
     @Bean
-    public SampleBean createSampleBean(@Qualifier("namaDepan") DataBean dataBean){
+    public SampleBean createSampleBean(@Qualifier("namaDepan") DataBean dataBean) {
         SampleBean bean = new SampleBean(dataBean);
         return bean;
     }
 
     @Bean
-    public OtherBean createOtherBean(@Qualifier("namaBelakang") DataBean dataBean, SampleBean sampleBean){
+    public OtherBean createOtherBean(@Qualifier("namaBelakang") DataBean dataBean, SampleBean sampleBean) {
         OtherBean bean = new OtherBean(dataBean, sampleBean);
         return bean;
     }
